@@ -1,12 +1,21 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const workoutRoutes = require("./routes/workoutRoutes");
 const errorHandler = require("./middleware/error-handler");
 
 const app = express();
 
 // middleware
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend server
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+
 app.use((req, res, next) => {
   console.log(" path: " + req.path, "method:" + req.method);
   next();
