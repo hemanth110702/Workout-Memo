@@ -32,7 +32,7 @@ const getWorkout = async (req, res) => {
 
 const getWorkouts = async (req, res) => {
   try {
-    const workouts = await Workout.find();
+    const workouts = await Workout.find().sort({createdAt: -1});
     return res.status(200).send(workouts);
   } catch (err) {
     console.error(err);
