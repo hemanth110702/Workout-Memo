@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import apiClient from "../services/apiClient";
+import { useWorkoutsContext } from "../context/WorkoutsContext";
 
 const CreateWorkout = () => {
+  const { dispatch } = useWorkoutsContext();
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
@@ -19,6 +21,7 @@ const CreateWorkout = () => {
       setLoad("");
       setReps("");
       setError(null);
+      dispatch({type: "CREATE_WORKOUT", payload: response.data})
       console.log("new workout added ", response.data);
     } catch (err) {
       console.log(err);
