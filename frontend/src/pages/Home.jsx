@@ -13,7 +13,7 @@ const Home = () => {
         dispatch({ type: "SET_WORKOUTS", payload: response.data });
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [workouts]);
   return (
     <div>
       <div>
