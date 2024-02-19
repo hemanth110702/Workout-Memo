@@ -29,24 +29,23 @@ const CreateWorkout = () => {
     if (!reps) setEmptyFields((prev) => [...prev, "reps"]);
     if (emptyFields.length > 0) {
       setError("All Fields are required");
-      return
-    } else {
-      try {
-        const response = await apiClient.post(
-          "/api/workouts",
-          JSON.stringify(workout)
-        );
-        setTitle("");
-        setLoad("");
-        setReps("");
-        setError(null);
-        setEmptyFields([]);
-        dispatch({ type: "CREATE_WORKOUT", payload: response.data });
-        console.log("new workout added ", response.data);
-      } catch (err) {
-        console.log(err);
-        setError("Error Adding Workout: \n" + err.response.data + "\n");
-      }
+      return;
+    }
+    try {
+      const response = await apiClient.post(
+        "/api/workouts",
+        JSON.stringify(workout)
+      );
+      setTitle("");
+      setLoad("");
+      setReps("");
+      setError(null);
+      setEmptyFields([]);
+      dispatch({ type: "CREATE_WORKOUT", payload: response.data });
+      console.log("new workout added ", response.data);
+    } catch (err) {
+      console.log(err);
+      setError("Error Adding Workout: \n" + err.response.data + "\n");
     }
   };
 

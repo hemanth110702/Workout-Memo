@@ -1,6 +1,7 @@
 import React from "react";
 import apiClient from "../services/apiClient";
 import { useWorkoutsContext } from "../context/WorkoutsContext";
+import { formatDistanceToNow } from "date-fns";
 
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext();
@@ -18,7 +19,9 @@ const WorkoutDetails = ({ workout }) => {
       <h4>{workout.title}</h4>
       <h5>Load : {workout.load}</h5>
       <h5>reps : {workout.reps}</h5>
-      {workout.createdAt}
+      <p>
+        {formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}
+      </p>
       <button onClick={handleDelete}>Delete</button>
     </div>
   );
