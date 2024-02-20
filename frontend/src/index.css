@@ -1,3 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Protest+Strike&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-r from-cyan-500 to-blue-500;
+  }
+}
+
 .workout-details {
   background-color: lightcyan;
   padding: 1rem;

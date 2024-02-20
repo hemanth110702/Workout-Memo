@@ -15,14 +15,34 @@ const WorkoutDetails = ({ workout }) => {
       .catch((err) => console.log(err));
   };
   return (
-    <div className="workout-details">
-      <h4>{workout.title}</h4>
-      <h5>Load : {workout.load}</h5>
-      <h5>reps : {workout.reps}</h5>
+    <div className="p-2 font-kdam bg-blue-500  w-11/12 ">
+      <div className="flex justify-between ">
+        <h4 className=" text-xl font-bold uppercase">{workout.title}</h4>
+        <div className="flex gap-2">
+          <button className="px-3 bg-green-600 rounded-lg hover:bg-green-400">
+            Edit
+          </button>
+          <button
+            className="p-1 bg-red-600 text-white rounded-lg hover:bg-red-400"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+      <h5>
+        <span className="font-semibold text-red-700">Load :</span>{" "}
+        {workout.load}
+      </h5>
+      <h5>
+        <span className="font-semibold text-red-700">reps : </span>
+        {workout.reps}
+      </h5>
       <p>
+        {" "}
+        <span>Updated: </span>
         {formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}
       </p>
-      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 };
