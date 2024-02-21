@@ -11,6 +11,18 @@ const userSchema = mongoose.Schema(
   }
 );
 
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (!user) throw new Error("no user with this email");
+  try {
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) throw new Error("incorrect password");
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
+
 userSchema.statics.signup = async function (email, password) {
   const exists = await this.findOne({ email });
   if (exists) throw new Error("Email already in use");
@@ -21,7 +33,7 @@ userSchema.statics.signup = async function (email, password) {
     const user = await this.create({ email, password: hash });
     return user;
   } catch (err) {
-    throw err
+    throw err;
   }
 };
 
