@@ -1,6 +1,11 @@
 const Joi = require("joi");
 const joiPwdComplexity = require("joi-password-complexity");
+const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.SECRET);
+};
 
 const login = (req, res) => {
   const { error } = validateDetails(req.body);
@@ -16,8 +21,10 @@ const signup = async (req, res) => {
 
   try {
     const { email, password } = req.body;
-    const result = await User.signup(email, password);
-    res.status(200).send(result);
+    const user = await User.signup(email, password);
+
+    const token = await createToken(user._id);
+    res.status(200).json({ email, token });
   } catch (error) {
     console.log(error);
     res.status(500).send(error.message);
