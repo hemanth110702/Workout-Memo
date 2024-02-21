@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const workoutRoutes = require("./routes/workoutRoutes");
+const userRoutes = require("./routes/userRoutes");
 const errorHandler = require("./middleware/error-handler");
 
 const app = express();
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
   res.json({ msg: "Welcome to workout memo" });
 });
 app.use("/api/workouts", workoutRoutes);
+app.use("/user", userRoutes);
 
 mongoose
   .connect(process.env.mongodb_URL)
