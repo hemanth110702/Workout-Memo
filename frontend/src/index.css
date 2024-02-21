@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-r from-cyan-500 to-blue-500;
+    @apply bg-yellow-100;
   }
 }
 

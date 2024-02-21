@@ -50,33 +50,66 @@ const CreateWorkout = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      Exercise Title:{" "}
+    <form
+      className="bg-yellow-200 flex flex-col col-span-2  p-4 rounded-xl"
+      onSubmit={handleSubmit}
+    >
+      <h1 className="text-2xl font-bold text-center">Create Workout</h1>
+      <label className="mt-4 font-semibold" htmlFor="title">
+        Exercise Title:
+      </label>
       <input
         type="text"
         value={title}
+        id="title"
+        placeholder="ex:Push Ups"
         onChange={(e) => setTitle(e.target.value)}
-        className={emptyFields.includes("title") ? "error" : ""}
-      />{" "}
+        className={
+          emptyFields.includes("title")
+            ? "border-2 border-red-500 p-2 rounded outline-red-500 "
+            : "p-2 rounded focus:border-blue-400 outline-blue-500"
+        }
+      />
       <br />
-      Load:{" "}
+      <label className="font-semibold" htmlFor="load">
+        Load:
+      </label>
       <input
         type="number"
+        id="load"
+        placeholder="ex:10"
         value={load}
-        className={emptyFields.includes("load") ? "error" : ""}
+        className={
+          emptyFields.includes("load")
+            ? "border-2 border-red-500 p-2 rounded outline-red-500 "
+            : "p-2 rounded focus:border-blue-400 outline-blue-500"
+        }
         onChange={(e) => setLoad(e.target.value)}
-      />{" "}
+      />
       <br />
-      Reps:{" "}
+      <label htmlFor="reps">Reps:</label>
       <input
         type="number"
+        id="reps"
         value={reps}
-        className={emptyFields.includes("reps") ? "error" : ""}
+        placeholder="ex:5"
+        className={
+          emptyFields.includes("reps")
+            ? "border-2 border-red-500 p-2 rounded outline-red-500 "
+            : "p-2 rounded focus:border-blue-400   outline-blue-500"
+        }
         onChange={(e) => setReps(e.target.value)}
       />{" "}
       <br />
-      <button>Add workout</button> <br />
-      {error && <p style={{ whiteSpace: "pre-line" }}>{error}</p>}
+      <button className="bg-green-600 text-white w-fit self-center p-2 rounded-xl hover:bg-green-400 ">
+        Add Workout
+      </button>{" "}
+      <br />
+      {error && (
+        <p className="whitespace-pre-line border-2 p-2 border-red-500 rounded-sm text-red-400 ">
+          {error}
+        </p>
+      )}
     </form>
   );
 };
