@@ -13,14 +13,22 @@ const userSchema = mongoose.Schema(
 
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
-  if (!user) throw new Error("no user with this email");
-  try {
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) throw new Error("incorrect password");
-    return user;
-  } catch (err) {
-    throw err;
-  }
+  if (!user)
+    return {
+      error: { isError: true, message: "no user with this email" },
+      user: "",
+    };
+
+  const valid = await bcrypt.compare(password, user.password);
+  if (!valid)
+    return {
+      error: { isError: true, message: "incorrect password" },
+      user: "",
+    };
+  return {
+    error: { isError: false, message: "" },
+    user,
+  };
 };
 
 userSchema.statics.signup = async function (email, password) {

@@ -7,12 +7,15 @@ const createToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET);
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
   const { error } = validateDetails(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   try {
     const { email, password } = req.body;
-    const user = User.login(email, password);
+    const {error, user} = await User.login(email, password);
+    if(error.isError) {
+      return res.status(400).send(error.message)
+    }
     const token = createToken(user._id);
     return res.status(200).json({ email, token });
   } catch (error) {
