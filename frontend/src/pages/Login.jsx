@@ -16,26 +16,44 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
-      <label htmlFor="email">Email</label>
+    <form
+      className="bg-green-500 flex flex-col w-80 m-auto mt-16 p-10 rounded-xl"
+      onSubmit={handleSubmit}
+    >
+      <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
+      <label className="font-semibold" htmlFor="email">
+        Email
+      </label>
       <input
         type="email"
         id="email"
+        className="outline-none focus:outline-blue-600 text-sm p-1 rounded-sm  invalid:outline-red-500 "
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
       />
-      <label htmlFor="pwd">Password</label>
+      <label className="font-semibold mt-4" htmlFor="pwd">
+        Password
+      </label>
       <input
         type="text"
         id="pwd"
+        className="outline-none focus:outline-blue-600 text-sm p-1 rounded-sm  invalid:outline-red-500 "
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button disabled={isLoading}>Login</button>
-      {error && <div>{error}</div>}
+      <button
+        className="mt-4 bg-blue-500 text-white w-fit self-center p-2 rounded-lg hover:bg-blue-700 disabled:bg-blue-300"
+        disabled={isLoading}
+      >
+        Login
+      </button>
+      {error && (
+        <div className="border-2 rounded-lg  border-red-600 bg-white mt-4 p-2 text-red-500">
+          {error}
+        </div>
+      )}
     </form>
   );
 };

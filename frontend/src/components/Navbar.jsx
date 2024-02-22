@@ -5,7 +5,7 @@ import { useAuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const { logout } = useLogout();
-  const {user} = useAuthContext()
+  const { user } = useAuthContext();
   const handleLogout = () => {
     logout();
   };
@@ -16,14 +16,29 @@ const Navbar = () => {
       <div>
         {user && (
           <div>
-            <span>{user.email}</span>
-            <button onClick={handleLogout}>Logout</button>
+            <span className="mr-4">{user.email}</span>
+            <button
+              className="mr-4 hover:bg-green-500 p-4 hover:text-white"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
           </div>
         )}
         {!user && (
           <div>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link
+              className="mr-4 hover:bg-green-500 p-4 hover:text-white"
+              to="/login"
+            >
+              Login
+            </Link>
+            <Link
+              className="mr-4 hover:bg-green-500 p-4 hover:text-white"
+              to="/signup"
+            >
+              Sign Up
+            </Link>
           </div>
         )}
       </div>
