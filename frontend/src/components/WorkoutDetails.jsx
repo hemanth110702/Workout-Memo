@@ -1,14 +1,23 @@
-import React from "react";
-import apiClient from "../services/apiClient";
 import { useWorkoutsContext } from "../context/WorkoutsContext";
+import { useAuthContext } from "../context/AuthContext";
+
+import apiClient from "../services/apiClient";
 import { formatDistanceToNow } from "date-fns";
 
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
 
   const handleDelete = () => {
+    if (!user) return;
+
     apiClient
-      .delete(`api/workouts/${workout._id}`)
+      .delete(`api/workouts/${workout._id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      })
       .then(() => {
         dispatch({ type: "DELETE_WORKOUT", payload: { id: workout._id } });
       })

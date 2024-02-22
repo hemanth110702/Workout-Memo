@@ -1,14 +1,15 @@
+const Workout = require("../models/workoutModel");
 const mongoose = require("mongoose");
 const Joi = require("joi");
-const Workout = require("../models/workoutModel");
 
 const createWorkout = async (req, res) => {
+  const { error } = validateWorkout(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
   try {
-    const { error } = validateWorkout(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-
     const { title, reps, load } = req.body;
-    const workout = await Workout.create({ title, reps, load });
+    const user_id = req.user._id;
+    const workout = await Workout.create({ title, reps, load, user_id });
+    console.log(workout);
     return res.status(200).json(workout);
   } catch (err) {
     console.error(err);
@@ -31,8 +32,10 @@ const getWorkout = async (req, res) => {
 };
 
 const getWorkouts = async (req, res) => {
+  console.log("ddddd",req.user);
+  const user_id = req.user._id;
   try {
-    const workouts = await Workout.find().sort({createdAt: -1});
+    const workouts = await Workout.find({ user_id }).sort({ createdAt: -1 });
     return res.status(200).send(workouts);
   } catch (err) {
     console.error(err);

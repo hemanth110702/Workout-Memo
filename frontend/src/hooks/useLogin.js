@@ -9,6 +9,7 @@ export const useLogin = () => {
 
   const login = async (email, password) => {
     setIsLoading(true);
+    setError(null);
     try {
       const response = await apiClient.post("/user/login", { email, password });
       const data = response.data;

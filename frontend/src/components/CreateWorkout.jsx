@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "../services/apiClient";
 import { useWorkoutsContext } from "../context/WorkoutsContext";
+import { useAuthContext } from "../context/AuthContext";
+import apiClient from "../services/apiClient";
 
 const CreateWorkout = () => {
   const { dispatch } = useWorkoutsContext();
@@ -9,6 +10,7 @@ const CreateWorkout = () => {
   const [reps, setReps] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     if (title && emptyFields.includes("title"))
@@ -22,6 +24,12 @@ const CreateWorkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
+
     const workout = { title, load, reps };
 
     if (!title) setEmptyFields((prev) => [...prev, "title"]);
@@ -33,9 +41,16 @@ const CreateWorkout = () => {
     }
     try {
       const response = await apiClient.post(
-        "/api/workouts",
-        JSON.stringify(workout)
+        "/api/workouts/",
+        JSON.stringify(workout),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
       );
+      console.log(response);
       setTitle("");
       setLoad("");
       setReps("");
@@ -45,7 +60,7 @@ const CreateWorkout = () => {
       console.log("new workout added ", response.data);
     } catch (err) {
       console.log(err);
-      setError("Error Adding Workout: \n" + err.response.data + "\n");
+      setError("Error Adding Workout: \n" + err + "\n");
     }
   };
 
@@ -115,4 +130,3 @@ const CreateWorkout = () => {
 };
 
 export default CreateWorkout;
-
