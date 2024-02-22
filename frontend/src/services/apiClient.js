@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURLs = {
   development: "http://localhost:4000",
-  production: "https://workout-memo-api.onrender.com",
+  production: "https://workout-memo-api.vercel.app/",
 };
 
 const baseURL =
